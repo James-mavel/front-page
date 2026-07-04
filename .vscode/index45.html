@@ -1,0 +1,725 @@
+zzz   – -––-<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAXI — Book Your Ride in Seconds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt: #1B1F27;
+    --asphalt-2: #242A35;
+    --asphalt-3: #2E3542;
+    --yellow: #FFC93C;
+    --yellow-dark: #E8AE1D;
+    --green: #2E7D5B;
+    --cream: #F5F3EE;
+    --slate: #8A93A3;
+    --slate-dark: #5B6472;
+    --white: #FFFFFF;
+
+    --display: 'Archivo Black', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family: var(--body);
+    background: var(--cream);
+    color: var(--asphalt);
+    line-height: 1.5;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    background: var(--asphalt);
+    border-bottom: 3px solid var(--yellow);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height: 76px;
+  }
+  .logo{
+    font-family: var(--display);
+    color: var(--white);
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo .dot{
+    width:10px; height:10px;
+    background: var(--yellow);
+    border-radius:50%;
+    display:inline-block;
+  }
+  .nav-links{
+    display:flex;
+    gap: 36px;
+    align-items:center;
+  }
+  .nav-links a{
+    color: var(--slate);
+    font-size: 15px;
+    font-weight: 500;
+    transition: color .15s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color: var(--white); }
+  .nav-cta{
+    display:flex;
+    align-items:center;
+    gap: 18px;
+  }
+  .signin{
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .btn{
+    display:inline-block;
+    font-weight:700;
+    font-size:14px;
+    padding: 11px 22px;
+    border-radius: 4px;
+    transition: transform .12s ease, background .15s ease;
+  }
+  .btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible{
+    outline: 3px solid var(--green);
+    outline-offset: 2px;
+  }
+  .btn-yellow{
+    background: var(--yellow);
+    color: var(--asphalt);
+  }
+  .btn-yellow:hover{ background: var(--yellow-dark); transform: translateY(-1px); }
+  .menu-toggle{
+    display:none;
+    background:none;
+    color:var(--white);
+    font-size:26px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background: var(--asphalt);
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0 158px, rgba(255,255,255,0.035) 158px 160px);
+    color: var(--white);
+    padding: 88px 0 0;
+    overflow: hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 40px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    color: var(--yellow);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .hero h1{
+    font-family: var(--display);
+    font-size: 52px;
+    line-height: 1.08;
+    letter-spacing: -0.5px;
+    margin-bottom: 22px;
+  }
+  .hero h1 .accent{ color: var(--yellow); }
+  .hero p.lead{
+    font-size: 17px;
+    color: var(--slate);
+    max-width: 460px;
+    margin-bottom: 34px;
+  }
+
+  /* Route signature graphic */
+  .route-art{
+    position:relative;
+    height: 340px;
+  }
+  .route-art svg{ width:100%; height:100%; }
+  .route-label{
+    font-family: var(--mono);
+    font-size: 12px;
+    fill: var(--slate);
+  }
+  .route-pin-label{
+    font-family: var(--body);
+    font-weight:700;
+    font-size: 13px;
+    fill: var(--white);
+  }
+
+  /* Booking card */
+  .book-card{
+    background: var(--asphalt-2);
+    border: 1px solid var(--asphalt-3);
+    border-radius: 10px;
+    padding: 28px;
+    margin-top: -10px;
+    box-shadow: 0 24px 48px -20px rgba(0,0,0,0.5);
+  }
+  .book-card-title{
+    font-size: 13px;
+    font-weight:700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 18px;
+  }
+  .field-row{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+  }
+  .field.full{ grid-column: 1 / -1; }
+  .field label{
+    font-size: 12px;
+    font-weight:600;
+    color: var(--slate);
+  }
+  .field input, .field select{
+    background: var(--asphalt);
+    border: 1px solid var(--asphalt-3);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .field input::placeholder{ color: #5B6472; }
+  .ride-types{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .ride-type{
+    background: var(--asphalt);
+    border: 1px solid var(--asphalt-3);
+    border-radius: 6px;
+    padding: 10px 8px;
+    text-align:center;
+    color: var(--slate);
+    font-size: 13px;
+    font-weight:600;
+  }
+  .ride-type input{ display:none; }
+  .ride-type span{ display:block; }
+  .ride-type .price{ font-family: var(--mono); color: var(--slate); font-size:12px; margin-top:3px; }
+  .ride-type:has(input:checked){
+    border-color: var(--yellow);
+    background: rgba(255,201,60,0.08);
+    color: var(--white);
+  }
+  .book-submit{
+    width:100%;
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  /* ---------- METER STRIP ---------- */
+  .meter-strip{
+    background: var(--yellow);
+    padding: 22px 0;
+  }
+  .meter-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align:center;
+  }
+  .meter-num{
+    font-family: var(--mono);
+    font-weight:700;
+    font-size: 26px;
+    color: var(--asphalt);
+  }
+  .meter-label{
+    font-size: 12px;
+    font-weight:600;
+    color: var(--asphalt);
+    opacity: 0.75;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  section{ padding: 88px 0; }
+  .section-head{
+    max-width: 560px;
+    margin-bottom: 52px;
+  }
+  .section-tag{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+  .section-head h2{
+    font-family: var(--display);
+    font-size: 34px;
+    letter-spacing: -0.5px;
+  }
+  .steps{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .step{
+    border-top: 3px solid var(--asphalt);
+    padding-top: 20px;
+  }
+  .step-num{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--slate-dark);
+    margin-bottom: 14px;
+  }
+  .step h3{
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+  .step p{ color: var(--slate-dark); font-size: 15px; }
+
+  /* ---------- FEATURES ---------- */
+  .features{ background: var(--asphalt-2); }
+  .features .section-tag{ color: var(--yellow); }
+  .features .section-head h2, .features p{ color: var(--white); }
+  .feat-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .feat{
+    background: var(--asphalt);
+    border: 1px solid var(--asphalt-3);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .feat svg{ width:26px; height:26px; margin-bottom:16px; }
+  .feat h3{ color: var(--white); font-size: 16px; margin-bottom: 8px; }
+  .feat p{ color: var(--slate); font-size: 14px; }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .quotes{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .quote{
+    background: var(--white);
+    border: 1px solid #E4E0D6;
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .quote p{ font-size: 15px; margin-bottom: 16px; }
+  .quote-who{ font-size: 13px; color: var(--slate-dark); font-weight:600; }
+  .stars{ color: var(--yellow-dark); font-size: 14px; margin-bottom: 10px; letter-spacing: 2px; }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    background: var(--asphalt);
+    color: var(--white);
+    text-align:center;
+    padding: 80px 0;
+  }
+  .cta h2{
+    font-family: var(--display);
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  .cta p{ color: var(--slate); margin-bottom: 30px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--asphalt);
+    border-top: 1px solid var(--asphalt-3);
+    padding: 48px 0 28px;
+    color: var(--slate);
+  }
+  .foot-grid{
+    display:grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+  .foot-grid h4{
+    color: var(--white);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .foot-grid a{
+    display:block;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--slate);
+  }
+  .foot-grid a:hover{ color: var(--yellow); }
+  .foot-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top: 1px solid var(--asphalt-3);
+    padding-top: 24px;
+    font-size: 13px;
+  }
+  .socials{ display:flex; gap:14px; }
+  .socials a{ color: var(--slate); }
+  .socials a:hover{ color: var(--yellow); }
+
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .route-art{ order:-1; height: 220px; }
+    .hero h1{ font-size: 38px; }
+    .nav-links{ display:none; }
+    .menu-toggle{ display:block; }
+    .meter-grid{ grid-template-columns: repeat(2,1fr); gap: 28px 20px; }
+    .steps, .feat-grid, .quotes{ grid-template-columns: 1fr; }
+    .foot-grid{ grid-template-columns: 1fr 1fr; }
+    .field-row{ grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="dot"></span>TAXI</div>
+    <ul class="nav-links">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#features">Services</a></li>
+      <li><a href="#book">Book</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="signin">Sign in</a>
+      <a href="#book" class="btn btn-yellow">Book Now</a>
+    </div>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding-bottom:0;">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Dispatch · Ride · Arrive</div>
+        <h1>Your ride,<br><span class="accent">mapped</span> in seconds.</h1>
+        <p class="lead">Drop your pickup and destination, and we'll line up the nearest driver — real-time fare, real-time route, no guessing.</p>
+      </div>
+
+      <div class="route-art" aria-hidden="true">
+        <svg viewBox="0 0 420 340" fill="none">
+          <path d="M60 260 C 140 260, 150 90, 240 90 S 340 40, 360 60" stroke="#FFC93C" stroke-width="2" stroke-dasharray="7 8"/>
+          <circle cx="60" cy="260" r="8" fill="#2E7D5B"/>
+          <circle cx="60" cy="260" r="14" fill="none" stroke="#2E7D5B" stroke-width="1.5" opacity="0.5"/>
+          <text x="80" y="264" class="route-pin-label">Pickup</text>
+          <text x="80" y="282" class="route-label">Ndagani</text>
+
+          <circle cx="360" cy="60" r="8" fill="#FFC93C"/>
+          <circle cx="360" cy="60" r="14" fill="none" stroke="#FFC93C" stroke-width="1.5" opacity="0.5"/>
+          <text x="405" y="46" text-anchor="end" class="route-pin-label">Destination</text>
+          <text x="405" y="28" text-anchor="end" class="route-label">Chuka Town, Tharaka Nithi</text>
+
+          <g id="car">
+            <rect x="-11" y="-7" width="22" height="14" rx="4" fill="#FFFFFF"/>
+            <rect x="-7" y="-11" width="14" height="8" rx="3" fill="#FFFFFF"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" style="padding-top:36px;">
+    <div class="wrap">
+      <div class="book-card" style="max-width:640px;">
+        <div class="book-card-title">Book your ride</div>
+        <div class="field-row">
+          <div class="field full">
+            <label for="pickup">Pickup location</label>
+            <input id="pickup" type="text" placeholder="e.g. Ndagani">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field full">
+            <label for="dest">Destination</label>
+            <input id="dest" type="text" placeholder="e.g. Chuka Town, Tharaka Nithi">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="date">Date</label>
+            <input id="date" type="date">
+          </div>
+          <div class="field">
+            <label for="time">Time</label>
+            <input id="time" type="time">
+          </div>
+        </div>
+
+        <div class="field" style="margin-bottom:10px;">
+          <label>Ride type</label>
+        </div>
+        <div class="ride-types">
+          <label class="ride-type"><input type="radio" name="ride" checked><span>Standard</span><span class="price">from KSh 350</span></label>
+          <label class="ride-type"><input type="radio" name="ride"><span>Comfort</span><span class="price">from KSh 550</span></label>
+          <label class="ride-type"><input type="radio" name="ride"><span>XL</span><span class="price">from KSh 800</span></label>
+        </div>
+
+        <button class="btn btn-yellow book-submit">Find my ride</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="meter-strip" style="padding-top:56px;">
+    <div class="wrap meter-grid">
+      <div>
+        <div class="meter-num" id="stat-rides">0</div>
+        <div class="meter-label">Rides this month</div>
+      </div>
+      <div>
+        <div class="meter-num">4.9★</div>
+        <div class="meter-label">Average rating</div>
+      </div>
+      <div>
+        <div class="meter-num" id="stat-drivers">0</div>
+        <div class="meter-label">Drivers online now</div>
+      </div>
+      <div>
+        <div class="meter-num">24/7</div>
+        <div class="meter-label">Dispatch available</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-tag">How it works</div>
+        <h2>Three steps between here and there.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Set your route</h3>
+          <p>Enter your pickup and destination — we'll show you the fare before you confirm.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Get matched</h3>
+          <p>The nearest available driver is dispatched to you, usually within a few minutes.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Ride & pay</h3>
+          <p>Track your trip live and pay in-app, by card, or with cash — your choice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-tag">Why cabline</div>
+        <h2>Built for the trip you actually take.</h2>
+      </div>
+      <div class="feat-grid">
+        <div class="feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFC93C" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg>
+          <h3>Verified drivers</h3>
+          <p>Every driver is background-checked and rated by riders like you.</p>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFC93C" stroke-width="2"><path d="M12 8v5l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+          <h3>Fares shown upfront</h3>
+          <p>See your exact fare before you book — no surprise charges on arrival.</p>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFC93C" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+          <h3>Live trip tracking</h3>
+          <p>Share your route with anyone, and watch your driver approach in real time.</p>
+        </div>
+        <div class="feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFC93C" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <h3>24/7 support</h3>
+          <p>A real person answers, day or night, if something doesn't go to plan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-tag">Riders say</div>
+        <h2>Trusted by commuters across the city.</h2>
+      </div>
+      <div class="quotes">
+        <div class="quote">
+          <div class="stars">★★★★★</div>
+          <p>The fare estimate matched exactly what I paid. First time that's happened with any taxi app.</p>
+          <div class="quote-who">— Wanjiru M.</div>
+        </div>
+        <div class="quote">
+          <div class="stars">★★★★★</div>
+          <p>Driver was outside in four minutes flat. Booking took less time than making tea.</p>
+          <div class="quote-who">— David K.</div>
+        </div>
+        <div class="quote">
+          <div class="stars">★★★★★</div>
+          <p>I share my trip link with my sister every time I ride alone at night. Simple peace of mind.</p>
+          <div class="quote-who">— Amina S.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="wrap">
+      <h2>Ready when you are.</h2>
+      <p>Book your first ride and see the fare before you commit.</p>
+      <a href="#book" class="btn btn-yellow">Book your ride</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo" style="margin-bottom:12px;"><span class="dot"></span>TAXI</div>
+        <p style="font-size:14px; max-width:260px;">Fast, safe and affordable taxi booking — mapped from pickup to destination.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <a href="#book">Book a ride</a>
+        <a href="#features">Services</a>
+        <a href="#">Drive with us</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="#contact">Contact us</a>
+        <a href="#">Help center</a>
+        <a href="#">Safety</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Taxi Booking System</span>
+      <div class="socials">
+        <a href="#" aria-label="Twitter">Twitter</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Facebook">Facebook</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Meter-style ticking counters
+  function animateCount(id, target, duration){
+    const el = document.getElementById(id);
+    if(!el) return;
+    const start = performance.now();
+    function tick(now){
+      const progress = Math.min((now - start) / duration, 1);
+      el.textContent = Math.floor(progress * target).toLocaleString();
+      if(progress < 1) requestAnimationFrame(tick);
+      else el.textContent = target.toLocaleString();
+    }
+    requestAnimationFrame(tick);
+  }
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReducedMotion){
+    document.getElementById('stat-rides').textContent = '12,480';
+    document.getElementById('stat-drivers').textContent = '186';
+  } else {
+    animateCount('stat-rides', 12480, 1400);
+    animateCount('stat-drivers', 186, 1400);
+  }
+
+  // Car glides along the route path on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const path = document.querySelector('.route-art path');
+    const car = document.getElementById('car');
+    if(!path || !car || prefersReducedMotion) return;
+    const len = path.getTotalLength();
+    let t = 0;
+    function moveCar(){
+      t += 0.0028;
+      if(t > 1) t = 0;
+      const point = path.getPointAtLength(t * len);
+      const nextPoint = path.getPointAtLength(Math.min(t * len + 1, len));
+      const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * 180 / Math.PI;
+      car.setAttribute('transform', `translate(${point.x}, ${point.y}) rotate(${angle})`);
+      requestAnimationFrame(moveCar);
+    }
+    moveCar();
+  });
+
+  // Mobile menu toggle (simple show/hide)
+  const toggle = document.querySelector('.menu-toggle');
+  const links = document.querySelector('.nav-links');
+  if(toggle){
+    toggle.addEventListener('click', () => {
+      const isOpen = links.style.display === 'flex';
+      links.style.display = isOpen ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '76px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = '#1B1F27';
+      links.style.padding = '20px 32px';
+      links.style.gap = '16px';
+    });
+  }
+</script>
+
+</body>
+</html>
